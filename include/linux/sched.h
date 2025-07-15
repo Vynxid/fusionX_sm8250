@@ -492,13 +492,13 @@ struct sched_entity {
 	u64				prev_sum_exec_runtime;
 	u64				vruntime;
 	union {
-		/*
-		 * When !@on_rq this field is vlag.
-		 * When cfs_rq->curr == se (which implies @on_rq)
-		 * this field is vprot. See protect_slice().
-		 */
-		s64                     vlag;
-		u64                     vprot;
+			/*
+			* When !@on_rq this field is vlag.
+			* When cfs_rq->curr == se (which implies @on_rq)
+			* this field is vprot. See protect_slice().
+			*/
+			s64                     vlag;
+			u64                     vprot;
 	};
 	u64				slice;
 
@@ -1419,7 +1419,6 @@ struct task_struct {
 #endif
 
 	ANDROID_KABI_RESERVE(7);
-#endif
 #ifdef CONFIG_KSU_SUSFS
 	ANDROID_KABI_USE(8, u64 susfs_last_fake_mnt_id);
 #else
@@ -1750,7 +1749,7 @@ void sched_migrate_to_cpumask_start(struct cpumask *old_mask,
 				    const struct cpumask *dest);
 void sched_migrate_to_cpumask_end(const struct cpumask *old_mask,
 				  const struct cpumask *dest);
-
+				  
 #ifndef cpu_relax_yield
 #define cpu_relax_yield() cpu_relax()
 #endif
